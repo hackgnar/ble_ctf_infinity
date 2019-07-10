@@ -8,8 +8,8 @@ If you need a reminder, do the following once you set up your whole esp build en
 ````
 cd ble_ctf
 make menuconfig   # set your serial device in bla -> bla -> bla
-make
 make codegen
+make
 # plug in your esp32 to usb
 make flash
 ````
