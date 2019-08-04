@@ -8,3 +8,4 @@ password_bruteforce, 993f257f734288d91fb3
 no_psk_pair_req,374449788e5de78804c4
 simple_adv,aee4bd941f8b4d9e3921
 write_notify_fuzz, 12345678901234567890
+pcap_write, 12345678901234567890
