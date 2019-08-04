@@ -4,3 +4,4 @@ sdkconfig.old
 main/*
 *.swp
 .vagrant
+scripts/*
