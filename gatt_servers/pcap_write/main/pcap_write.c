@@ -163,7 +163,7 @@ static const uint8_t char_prop_read_write   = ESP_GATT_CHAR_PROP_BIT_WRITE | ESP
 // start ctf data vars
 static char writeData[100];
 static const char docs_value[] = "find write value in this pcap";
-static const char pcap_url[] = "http://github.com/hackgnar/ble_ctf_infinity/gatt_servers/pcap_write/write_sample.pcap";
+static const char pcap_url[] = "https://github.com/hackgnar/ble_ctf_infinity/blob/master/gatt_servers/pcap_write/write_sample.pcap";
 static const char warp_value[] = "write here to goto to scoreboard";
 
 static char flag_pcap_write_value[] = "12345678901234567890";
