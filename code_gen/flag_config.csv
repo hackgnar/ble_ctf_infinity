@@ -7,3 +7,4 @@ mitm_psk_pair_req, e634f010b4d3ce9a324a
 password_bruteforce, 993f257f734288d91fb3
 no_psk_pair_req,374449788e5de78804c4
 simple_adv,aee4bd941f8b4d9e3921
+write_notify_fuzz, 12345678901234567890

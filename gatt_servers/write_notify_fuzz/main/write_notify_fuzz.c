@@ -25,7 +25,7 @@
 #include "esp_gap_ble_api.h"
 #include "esp_gatts_api.h"
 #include "esp_bt_main.h"
-#include "simple_adv.h"
+#include "write_notify_fuzz.h"
 #include "gatt_server_common.h"
 #include "esp_gatt_common_api.h"
 
@@ -45,7 +45,7 @@
 
 static uint8_t adv_config_done       = 0;
 
-uint16_t blectf_handle_table[SIMPLE_ADV_IDX_NB];
+uint16_t blectf_handle_table[WRITE_NOTIFY_FUZZ_IDX_NB];
 
 #define CONFIG_SET_RAW_ADV_DATA
 #ifdef CONFIG_SET_RAW_ADV_DATA
@@ -53,14 +53,12 @@ static uint8_t raw_adv_data[] = {
         /* flags */
         0x02, 0x01, 0x06,
         /* tx power*/
-        //0x02, 0x0a, 0xeb,
+        0x02, 0x0a, 0xeb,
         /* service uuid */
-        //0x03, 0x03, 0xFF, 0x00,
+        0x03, 0x03, 0xFF, 0x00,
         /* device name (first number is the length) */
 	//TODO generate flag name
-        0x08, 0x09, 'F','L','A','G','_','X','X',
-        0x09, 0x09, 'M','D','5','O','F','L','O','L',
-        0x03, 0x09, '.','.','.'
+        0x08, 0x09, 'F','L','A','G','_','X','X'
 
 };
 static uint8_t raw_scan_rsp_data[] = {
@@ -161,39 +159,50 @@ static const uint16_t character_client_config_uuid = ESP_GATT_UUID_CHAR_CLIENT_C
 static const uint8_t char_prop_read                =  ESP_GATT_CHAR_PROP_BIT_READ;
 static const uint8_t char_prop_write               = ESP_GATT_CHAR_PROP_BIT_WRITE;
 static const uint8_t char_prop_read_write   = ESP_GATT_CHAR_PROP_BIT_WRITE | ESP_GATT_CHAR_PROP_BIT_READ;
+static const uint8_t char_prop_write_notify   = ESP_GATT_CHAR_PROP_BIT_WRITE | ESP_GATT_CHAR_PROP_BIT_NOTIFY;
 
 // start ctf data vars
 static char writeData[100];
-static const char docs_value[] = "Im advertising the flag";
+static const char docs_value[] = "Handle 0x002C takes value AABBCCDDEEFF. Fuzz it!";
 static const char warp_value[] = "write here to goto to scoreboard";
 
-static char flag_simple_adv_value[] = "12345678901234567890";
+static char flag_write_notify_fuzz_value[] = "12345678901234567890";
 
 /* Full Database Description - Used to add attributes into the database */
-static const esp_gatts_attr_db_t gatt_db[SIMPLE_ADV_IDX_NB] =
+static const esp_gatts_attr_db_t gatt_db[WRITE_NOTIFY_FUZZ_IDX_NB] =
 {
     // Service Declaration
-    [SIMPLE_ADV_IDX_SVC]        =
+    [WRITE_NOTIFY_FUZZ_IDX_SVC]        =
     {{ESP_GATT_AUTO_RSP}, {ESP_UUID_LEN_16, (uint8_t *)&primary_service_uuid, ESP_GATT_PERM_READ,
       sizeof(uint16_t), sizeof(GATTS_SERVICE_UUID_TEST), (uint8_t *)&GATTS_SERVICE_UUID_TEST}},
 
     /* Documentation Characteristic Declaration */
-    [SIMPLE_ADV_IDX_CHAR_READ_DOCS]      =
+    [WRITE_NOTIFY_FUZZ_IDX_CHAR_READ_DOCS]      =
     {{ESP_GATT_AUTO_RSP}, {ESP_UUID_LEN_16, (uint8_t *)&character_declaration_uuid, ESP_GATT_PERM_READ,
       CHAR_DECLARATION_SIZE, CHAR_DECLARATION_SIZE, (uint8_t *)&char_prop_read}},
 
     /* Documentation Characteristic Value */
-    [SIMPLE_ADV_IDX_CHAR_VAL_READ_DOCS]  =
+    [WRITE_NOTIFY_FUZZ_IDX_CHAR_VAL_READ_DOCS]  =
     {{ESP_GATT_AUTO_RSP}, {ESP_UUID_LEN_16, (uint8_t *)&GATTS_CHAR_UUID_READ_DOCS, ESP_GATT_PERM_READ | ESP_GATT_PERM_WRITE,
       GATTS_DEMO_CHAR_VAL_LEN_MAX, sizeof(docs_value)-1, (uint8_t *)docs_value}},
     
+    /* Flag Characteristic Declaration */
+    [WRITE_NOTIFY_FUZZ_IDX_CHAR_READ_FLAG]      =
+    {{ESP_GATT_AUTO_RSP}, {ESP_UUID_LEN_16, (uint8_t *)&character_declaration_uuid, ESP_GATT_PERM_WRITE,
+      CHAR_DECLARATION_SIZE, CHAR_DECLARATION_SIZE, (uint8_t *)&char_prop_write_notify}},
+
+    /* Flag Characteristic Value */
+    [WRITE_NOTIFY_FUZZ_IDX_CHAR_VAL_READ_FLAG]  =
+    {{ESP_GATT_AUTO_RSP}, {ESP_UUID_LEN_16, (uint8_t *)&GATTS_CHAR_UUID_READ_FLAG, ESP_GATT_PERM_WRITE,
+      GATTS_DEMO_CHAR_VAL_LEN_MAX, sizeof(flag_write_notify_fuzz_value)-1, (uint8_t *)flag_write_notify_fuzz_value}},
+    
     /* Warp Characteristic Declaration */
-    [SIMPLE_ADV_IDX_CHAR_WRITE_WARP]      =
+    [WRITE_NOTIFY_FUZZ_IDX_CHAR_WRITE_WARP]      =
     {{ESP_GATT_AUTO_RSP}, {ESP_UUID_LEN_16, (uint8_t *)&character_declaration_uuid, ESP_GATT_PERM_READ | ESP_GATT_PERM_WRITE,
       CHAR_DECLARATION_SIZE, CHAR_DECLARATION_SIZE, (uint8_t *)&char_prop_read_write}},
 
     /* Warp Characteristic Value */
-    [SIMPLE_ADV_IDX_CHAR_VAL_WRITE_WARP]  =
+    [WRITE_NOTIFY_FUZZ_IDX_CHAR_VAL_WRITE_WARP]  =
     {{ESP_GATT_AUTO_RSP}, {ESP_UUID_LEN_16, (uint8_t *)&GATTS_CHAR_UUID_WRITE_WARP, ESP_GATT_PERM_READ | ESP_GATT_PERM_WRITE,
       GATTS_DEMO_CHAR_VAL_LEN_MAX, sizeof(warp_value)-1, (uint8_t *)warp_value}},
 
@@ -293,7 +302,7 @@ static void gatts_profile_event_handler(esp_gatts_cb_event_t event, esp_gatt_if_
             }
             adv_config_done |= SCAN_RSP_CONFIG_FLAG;
     #endif
-            esp_err_t create_attr_ret = esp_ble_gatts_create_attr_tab(gatt_db, gatts_if, SIMPLE_ADV_IDX_NB, SVC_INST_ID);
+            esp_err_t create_attr_ret = esp_ble_gatts_create_attr_tab(gatt_db, gatts_if, WRITE_NOTIFY_FUZZ_IDX_NB, SVC_INST_ID);
             if (create_attr_ret){
                 ESP_LOGE(GATTS_TABLE_TAG, "create attr table failed, error code = %x", create_attr_ret);
             }
@@ -316,9 +325,18 @@ static void gatts_profile_event_handler(esp_gatts_cb_event_t event, esp_gatt_if_
                 memcpy(writeData, param->write.value, 20); 
                 
                 //warp back to scorebord
-                if (param->write.handle == blectf_handle_table[SIMPLE_ADV_IDX_CHAR_WRITE_WARP]+1){
+                if (param->write.handle == blectf_handle_table[WRITE_NOTIFY_FUZZ_IDX_CHAR_WRITE_WARP]+1){
                     esp_restart();
                 }
+                if (param->write.handle == blectf_handle_table[WRITE_NOTIFY_FUZZ_IDX_CHAR_READ_FLAG]+1){
+		    uint64_t descr_value = param->write.value[0]<<40 |param->write.value[1]<<32 |param->write.value[2]<<24 |param->write.value[3] << 16 | param->write.value[4] << 8 |param->write.value[5] ;
+                    ESP_LOGI(GATTS_TABLE_TAG, "descr_value = %llu", descr_value);
+		    if (param->write.value[0] == 0xAA && param->write.value[1] == 0xBB && param->write.value[2] == 0xC8 && param->write.value[3] == 0xDD && param->write.value[4] == 0xEE && param->write.value[5] == 0xFF ){
+		    	esp_ble_gatts_send_indicate(gatts_if, param->write.conn_id, blectf_handle_table[WRITE_NOTIFY_FUZZ_IDX_CHAR_READ_FLAG], sizeof(flag_write_notify_fuzz_value), (uint8_t *)flag_write_notify_fuzz_value, true);
+		    } else {
+		    esp_ble_gatts_send_indicate(gatts_if, param->write.conn_id, blectf_handle_table[WRITE_NOTIFY_FUZZ_IDX_CHAR_READ_FLAG], sizeof(writeData), (uint8_t *)writeData, true);
+                    }
+		}
             }
             else{
                 /* handle prepare write */
@@ -359,14 +377,14 @@ static void gatts_profile_event_handler(esp_gatts_cb_event_t event, esp_gatt_if_
             if (param->add_attr_tab.status != ESP_GATT_OK){
                 ESP_LOGE(GATTS_TABLE_TAG, "create attribute table failed, error code=0x%x", param->add_attr_tab.status);
             }
-            else if (param->add_attr_tab.num_handle != SIMPLE_ADV_IDX_NB){
+            else if (param->add_attr_tab.num_handle != WRITE_NOTIFY_FUZZ_IDX_NB){
                 ESP_LOGE(GATTS_TABLE_TAG, "create attribute table abnormally, num_handle (%d) \
-                        doesn't equal to IDX_NB(%d)", param->add_attr_tab.num_handle, SIMPLE_ADV_IDX_NB);
+                        doesn't equal to IDX_NB(%d)", param->add_attr_tab.num_handle, WRITE_NOTIFY_FUZZ_IDX_NB);
             }
             else {
                 ESP_LOGI(GATTS_TABLE_TAG, "create attribute table successfully, the number handle = %d\n",param->add_attr_tab.num_handle);
                 memcpy(blectf_handle_table, param->add_attr_tab.handles, sizeof(blectf_handle_table));
-                esp_ble_gatts_start_service(blectf_handle_table[SIMPLE_ADV_IDX_SVC]);
+                esp_ble_gatts_start_service(blectf_handle_table[WRITE_NOTIFY_FUZZ_IDX_SVC]);
             }
             break;
         }
