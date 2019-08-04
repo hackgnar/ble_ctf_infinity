@@ -626,7 +626,7 @@ void app_main()
      * vTaskDelay(30000 / portTICK_PERIOD_MS);
      * remove_all_bonded_devices();
      */
-     vTaskDelay(30000 / portTICK_PERIOD_MS);
+     //vTaskDelay(30000 / portTICK_PERIOD_MS);
      remove_all_bonded_devices();
 }
 
