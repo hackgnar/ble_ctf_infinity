@@ -7,6 +7,8 @@
 - [FAQ](docs/faq.md)
 
 ## BLE Capture the Flag v2.0
+Welcome to BLE CTF Infinity!  This project is the continuation of my first [BLE CTF](https://github.com/hackgnar/ble_ctf).  If you have not done the first version of my CTF or are new to Bluetooth LE, I recommend you start there.  The BLE CTF Infinity project is more challenging than the first version.
+
 The purpose of BLE CTF is to teach the core concepts of Bluetooth Low Energy client and server interactions.  While it has also been built to be fun, it was built with the intent to teach and reinforce core concepts that are needed to plunge into the world of Bluetooth hacking.  After completing this CTF, you should have everything you need to start fiddling with any BLE GATT device you can find.
 
 ## Getting Started
