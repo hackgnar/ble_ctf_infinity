@@ -6,7 +6,7 @@ Now, to get started, setup your esp32 build environment by following [this docum
 
 If you need a reminder, do the following once you set up your whole esp build environment from the link above.
 ````
-cd ble_ctf
+cd ble_ctf_infinity
 make menuconfig   # set your serial device in bla -> bla -> bla
 make codegen
 make
