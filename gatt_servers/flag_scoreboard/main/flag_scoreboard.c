@@ -166,7 +166,7 @@ static const uint8_t char_prop_read_write   = ESP_GATT_CHAR_PROP_BIT_WRITE | ESP
 
 // start ctf data vars
 static char writeData[100];
-static const char docs_value[] = "docs: https://github.com/hackgnar/ble_ctf";
+static const char docs_value[] = "docs: https://github.com/hackgnar/ble_ctf_infinity";
 static unsigned char flags_complete_value[] = "Flags complete:   /  ";
 static int int_total_flags = 0;
 static char string_total_flags[] = "0";

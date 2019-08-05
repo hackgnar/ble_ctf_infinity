@@ -29,7 +29,7 @@ LE Scan ...
 
 Take a look at your dashboard with the tool of your choice (ie gatttool, bleah, bettercap, etc).  The following is generated with an ugly gist I use:
 ```
-./ghetto_bleah.sh 11:22:33:44:55:66
+bleah -b 11:22:33:44:55:66 -e
 ```
 Output:
 
@@ -37,7 +37,7 @@ Output:
 | --- | --- | --- | --- |
 | 0x0018 | 00002a01-0000-1000-8000-00805f9b34fb | READ                       |  |
 | 0x001a | 00002aa6-0000-1000-8000-00805f9b34fb | READ                       |  |
-| 0x002a | 0000ff01-0000-1000-8000-00805f9b34fb | READ                       | docs: https://github.com/hackgnar/ble_ctf |
+| 0x002a | 0000ff01-0000-1000-8000-00805f9b34fb | READ                       | docs: https://github.com/hackgnar/ble_ctf_infinity |
 | 0x002c | 0000ff02-0000-1000-8000-00805f9b34fb | READ                       | Flags complete: 0 /10 |
 | 0x002e | 0000ff02-0000-1000-8000-00805f9b34fb | READ WRITE                 | Submit flags here |
 | 0x0030 | 0000ff02-0000-1000-8000-00805f9b34fb | READ WRITE                 | Write 0x0000 to 0x00FF to goto flag |
@@ -71,7 +71,7 @@ Don't worry about the above error.  You will get a similar error each time you n
 
 Now, lets take a look at the flag 1 GATT server
 ```
-./ghetto_bleah.sh 11:22:33:44:55:66
+bleah -b 11:22:33:44:55:66 -e
 ```
 
 Output:
@@ -100,14 +100,14 @@ gatttool -b 11:22:33:44:55:66 --char-write-req -a 0x002e -n $(echo -n "123456789
 
 Then if we look at the dashboard again, you can see it shows we completed a flag
 ```
-./ghetto_bleah.sh 11:22:33:44:55:66
+bleah -b 11:22:33:44:55:66 -e
 ```
 
 | Handle | Characteristic                       | Permissions                | Value |
 | --- | --- | --- | --- |
 | 0x0018 | 00002a01-0000-1000-8000-00805f9b34fb | READ                       |  |
 | 0x001a | 00002aa6-0000-1000-8000-00805f9b34fb | READ                       |  |
-| 0x002a | 0000ff01-0000-1000-8000-00805f9b34fb | READ                       | docs: https://github.com/hackgnar/ble_ctf |
+| 0x002a | 0000ff01-0000-1000-8000-00805f9b34fb | READ                       | docs: https://github.com/hackgnar/ble_ctf_infinity |
 | 0x002c | 0000ff02-0000-1000-8000-00805f9b34fb | READ                       | Flags complete: 1 /10 |
 | 0x002e | 0000ff02-0000-1000-8000-00805f9b34fb | READ WRITE                 | Submit flags here |
 | 0x0030 | 0000ff02-0000-1000-8000-00805f9b34fb | READ WRITE                 | Write 0x0000 to 0x00FF to goto flag |
