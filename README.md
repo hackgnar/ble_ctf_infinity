@@ -75,6 +75,7 @@ Now, lets take a look at the flag 1 GATT server
 ```
 
 Output:
+
 | Handle | Characteristic                       | Permissions                | Value |
 | --- | --- | --- | --- |
 | 0x0003 | 00002a05-0000-1000-8000-00805f9b34fb |      WRITE NOTIFY          | Characteristic value/descriptor read failed: Attribute can't be read|
