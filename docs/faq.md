@@ -1,5 +1,8 @@
 ﻿#FAQ
 
+## I'm stuck on a flag GATT server and can't get back to the scoreboard
+In each flag GATT server, there should be a read/write characteristic that you can write any value to to get back to the main dashboard.  If for some reason you can not find it or access this characteristic, you can simply power cycle your ESP32.  On reboot you should be back to the main dashboard.  Don't worry about your score being lost.  BLE CTF Infinity keeps your score in memory on the ESP32 so it persists on crashes and reboots.
+
 ## I can't get my Bluetooth to work to do the CTF
 Try reading [this documentation](workshop_setup.md).  It has tips on setting up Bluetooh and operating systems for doing the CTF. 
 
