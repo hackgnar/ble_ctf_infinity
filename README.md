@@ -34,7 +34,7 @@ Take a look at your dashboard with the tool of your choice (ie gatttool, bleah, 
 Output:
 
 | Handle | Characteristic                       | Permissions                | Value |
-| 0x0016 | 00002a00-0000-1000-8000-00805f9b34fb | READ                       | 04dc54d9053b4307680a |
+| --- | --- | --- | --- |
 | 0x0018 | 00002a01-0000-1000-8000-00805f9b34fb | READ                       |  |
 | 0x001a | 00002aa6-0000-1000-8000-00805f9b34fb | READ                       |  |
 | 0x002a | 0000ff01-0000-1000-8000-00805f9b34fb | READ                       | docs: https://github.com/hackgnar/ble_ctf |
@@ -76,6 +76,7 @@ Now, lets take a look at the flag 1 GATT server
 
 Output:
 | Handle | Characteristic                       | Permissions                | Value |
+| --- | --- | --- | --- |
 | 0x0003 | 00002a05-0000-1000-8000-00805f9b34fb |      WRITE NOTIFY          | Characteristic value/descriptor read failed: Attribute can't be read|
 | 0x0016 | 00002a00-0000-1000-8000-00805f9b34fb | READ                       | FLAG_1 |
 | 0x0018 | 00002a01-0000-1000-8000-00805f9b34fb | READ                       |  |
@@ -102,6 +103,7 @@ Then if we look at the dashboard again, you can see it shows we completed a flag
 ```
 
 | Handle | Characteristic                       | Permissions                | Value |
+| --- | --- | --- | --- |
 | 0x0018 | 00002a01-0000-1000-8000-00805f9b34fb | READ                       |  |
 | 0x001a | 00002aa6-0000-1000-8000-00805f9b34fb | READ                       |  |
 | 0x002a | 0000ff01-0000-1000-8000-00805f9b34fb | READ                       | docs: https://github.com/hackgnar/ble_ctf |
