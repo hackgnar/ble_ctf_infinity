@@ -8,7 +8,7 @@ Each flag is actually a totally separate GATT server which can be compiled 100% 
 
 ble_ctf_infinity/gatt_servers
 
-Even the scoreboard/dashboard is modular and can be swapped out! Feel free to write dashboards that are network enabled or hook into CTF project such as [CTFD](https://github.com/CTFd/CTFd)! 
+Even the scoreboard/dashboard is modular and can be swapped out! Feel free to write dashboards that are network enabled or hook into other CTF projects such as [CTFD](https://github.com/CTFd/CTFd)! 
 
 ## Simple Flag Creation Example
 Lets step though an example of how to build a new flag from scratch to include in the CTF.
