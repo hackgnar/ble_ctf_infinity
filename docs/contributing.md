@@ -122,6 +122,7 @@ Output:
 Thats it!  You'll notice the flag is reversed above based on our simple code addition.  A user can then read the hint, reverse the flag value and submit it on the scoreboard dashboard.
 
 ## Advanced Flag Creation Example
+This section of the documentation is still a work in progress.  For now, reading /code_gen/code_gen.py in detail will give you the best understanding of how to integrate your GATT server with the CTF framework.  This script generates C code to make GATT servers connect to the CTF framework.
+
 Want to add a flag that is more complex than the TEMPLATE_table GATT code?  In order for your GATT module to work with the CTF, there are a few requirements you will have to include in your code and GATT server. These requirements hook your server into the main GATT scoreboard/dashboard and allow the code generation Make scripts to add necessary code to make it compatible with the scoreboard & navigation system.  
 
-WIP... For now take a look at what the codegen script in /code_gen/code_gen.py is doing...
