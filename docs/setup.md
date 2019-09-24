@@ -4,10 +4,12 @@ First, you need an esp32 micro controller.  If you do not yet have one, I typica
 
 Now, to get started, setup your esp32 build environment by following [this documentation](http://esp-idf.readthedocs.io/en/latest/get-started/#setup-toolchain).  Once complete, you can build and flash the code from this repository just the same as you would from the example bluetooth programs in that project which are located in ```/esp-idf/examples/bluetooth/```
 
+When running `make menuconfig`, besides setting your serial device (Serial flasher config->Default serial port) of the ESP32, you will need to include the BlueTooth components (Component config->Bluetooth->Bluetooth) and disable compiler warnings (Compiler options -> Disable new warnings introduced in GCC 6 - 8).
+
 If you need a reminder, do the following once you set up your whole esp build environment from the link above.
 ````
 cd ble_ctf_infinity
-make menuconfig   # set your serial device in bla -> bla -> bla
+make menuconfig   # set your serial device (see note above)
 make codegen
 make
 # plug in your esp32 to usb

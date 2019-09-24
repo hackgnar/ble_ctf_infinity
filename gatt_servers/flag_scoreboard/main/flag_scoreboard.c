@@ -169,7 +169,7 @@ static char writeData[100];
 static const char docs_value[] = "docs: https://github.com/hackgnar/ble_ctf_infinity";
 static unsigned char flags_complete_value[] = "Flags complete:   /  ";
 static int int_total_flags = 0;
-static char string_total_flags[] = "0";
+static char string_total_flags[] = "00";
 static char string_current_score[] = "0";
 static const char flags_submit_value[] = "Submit flags here";
 static const char warp_value[] = "Write 0x0000 to 0x00FF to goto flag";

@@ -130,6 +130,8 @@ def generate_main_gatt_method_names(proj_dir):
 def copy_gatt_server_files(proj_dir):
     gatt_server_dir = os.path.join(proj_dir, "gatt_servers")
     main_dir = os.path.join(proj_dir, "main")
+    if not os.path.exists(main_dir):
+        os.makedirs(main_dir)
     for k, v in flag_file_data.iteritems():
         src = os.path.join(gatt_server_dir, v["gatt_name"], "main", v["gatt_name"])
         dst = os.path.join(main_dir, v["gatt_name"])
