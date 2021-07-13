@@ -33,7 +33,7 @@ def generate_devicename(proj_dir):
 #todo: codegen flag values
 def generate_flag_values(proj_dir):
     main_dir = os.path.join(proj_dir, "main")
-    for k, v in flag_file_data.iteritems():
+    for k, v in flag_file_data.items():
         sig = "//CODEGEN_FLAG_VALUES"
         template = """
 strcpy(flag_%s_value, "%s");"""
@@ -106,7 +106,7 @@ if (current_flag == %d){
 def generate_main_gatt_method_names(proj_dir):
     main_dir = os.path.join(proj_dir, "main")
     sig = "void app_main()"
-    for k, v in flag_file_data.iteritems():
+    for k, v in flag_file_data.items():
         dst = os.path.join(main_dir, v["gatt_name"])
         dst_c = dst + ".c"
         dst_h = dst + ".h"
@@ -130,7 +130,7 @@ def generate_main_gatt_method_names(proj_dir):
 def copy_gatt_server_files(proj_dir):
     gatt_server_dir = os.path.join(proj_dir, "gatt_servers")
     main_dir = os.path.join(proj_dir, "main")
-    for k, v in flag_file_data.iteritems():
+    for k, v in flag_file_data.items():
         src = os.path.join(gatt_server_dir, v["gatt_name"], "main", v["gatt_name"])
         dst = os.path.join(main_dir, v["gatt_name"])
         shutil.copyfile(src + ".c", dst + ".c")
