@@ -20,12 +20,12 @@ def generate_devicename(proj_dir):
         code_gen1 = "FLAG_%d" % (i)
         code_gen2 = "'F','L','A','G','_','0','%d'" % (i)
 
-        f = open(dst_c,'r')
+        f = open(dst_c,'r', encoding="utf-8")
         filedata = f.read()
         f.close()
         newdata = filedata.replace(sig1,code_gen1)
         newdata = newdata.replace(sig2,code_gen2)
-        f = open(dst_c,'w')
+        f = open(dst_c,'w', encoding="utf-8")
         f.write(newdata)
         f.close()
  
@@ -43,11 +43,11 @@ strcpy(flag_%s_value, "%s");"""
         dst = os.path.join(main_dir, v["gatt_name"])
         dst_c = dst + ".c"
 
-        f = open(dst_c,'r')
+        f = open(dst_c,'r', encoding="utf-8")
         filedata = f.read()
         f.close()
         newdata = filedata.replace(sig,code_gen)
-        f = open(dst_c,'w')
+        f = open(dst_c,'w', encoding="utf-8")
         f.write(newdata)
         f.close()
 
@@ -94,11 +94,11 @@ if (current_flag == %d){
         code_gen += template % (i, flag_file_data["flag_%d" % i]["gatt_name"])
         i += 1
     code_gen_header = sig + code_gen_header + code_gen + '}'
-    f = open(dst_c,'r')
+    f = open(dst_c,'r', encoding="utf-8")
     filedata = f.read()
     f.close()
     newdata = filedata.replace(sig,code_gen_header)
-    f = open(dst_c,'w')
+    f = open(dst_c,'w', encoding="utf-8")
     f.write(newdata)
     f.close()
     
@@ -112,18 +112,18 @@ def generate_main_gatt_method_names(proj_dir):
         dst_h = dst + ".h"
         code_gen = "void %s_main()" % (v["gatt_name"])
 
-        f = open(dst_c,'r')
+        f = open(dst_c,'r', encoding="utf-8")
         filedata = f.read()
         f.close()
         newdata = filedata.replace(sig,code_gen)
-        f = open(dst_c,'w')
+        f = open(dst_c,'w', encoding="utf-8")
         f.write(newdata)
         f.close()
-        f = open(dst_h,'r')
+        f = open(dst_h,'r', encoding="utf-8")
         filedata = f.read()
         f.close()
         newdata = filedata.replace(sig,code_gen)
-        f = open(dst_h,'w')
+        f = open(dst_h,'w', encoding="utf-8")
         f.write(newdata)
         f.close()
  
@@ -170,11 +170,11 @@ if (strcmp(flag_name, "flag_%i") == 0){
     code_gen = sig
     for i in range(len(flag_file_data)):
         code_gen += template % (i, i, i, i, i, i, i, i)
-    f = open(filename,'r')
+    f = open(filename,'r', encoding="utf-8")
     filedata = f.read()
     f.close()
     newdata = filedata.replace(sig,code_gen)
-    f = open(filename,'w')
+    f = open(filename,'w', encoding="utf-8")
     f.write(newdata)
     f.close()
 
@@ -187,11 +187,11 @@ FLAG_SCOREBOARD_IDX_CHAR_VAL_READ_FLAG_%i,"""
     code_gen = sig
     for i in range(len(flag_file_data)):
         code_gen += template % (i, i)
-    f = open(filename,'r')
+    f = open(filename,'r', encoding="utf-8")
     filedata = f.read()
     f.close()
     newdata = filedata.replace(sig,code_gen)
-    f = open(filename,'w')
+    f = open(filename,'w', encoding="utf-8")
     f.write(newdata)
     f.close()
 
@@ -200,7 +200,7 @@ def generate_includes(filename):
     template = """
 #include "%s.h" """
     code_gen = sig
-    f = open(filename,'r')
+    f = open(filename,'r', encoding="utf-8")
     filedata = f.read()
     f.close()
     for i in range(len(flag_file_data)):
@@ -210,7 +210,7 @@ def generate_includes(filename):
 
     newdata = filedata.replace(sig,code_gen)
 
-    f = open(filename,'w')
+    f = open(filename,'w', encoding="utf-8")
     f.write(newdata)
     f.close()
 
@@ -224,11 +224,11 @@ static const uint16_t GATTS_CHAR_UUID_READ_FLAG_%s = 0xFF%s;"""
         hex_location = hex(location+i)[2:].zfill(2)
         code_gen += template % (str(i), str(hex_location).upper())
     
-    f = open(filename,'r')
+    f = open(filename,'r', encoding="utf-8")
     filedata = f.read()
     f.close()
     newdata = filedata.replace(sig,code_gen)
-    f = open(filename,'w')
+    f = open(filename,'w', encoding="utf-8")
     f.write(newdata)
     f.close()
 
@@ -241,11 +241,11 @@ strcpy(string_total_flags, "%d");"""
     i = len(flag_file_data)
     code_gen += template % (i, i)
 
-    f = open(filename,'r')
+    f = open(filename,'r', encoding="utf-8")
     filedata = f.read()
     f.close()
     newdata = filedata.replace(sig,code_gen)
-    f = open(filename,'w')
+    f = open(filename,'w', encoding="utf-8")
     f.write(newdata)
     f.close()
 
@@ -257,11 +257,11 @@ static char flag_%d_value[] = "Flag %d: Incomplete";"""
     for i in range(len(flag_file_data)):
         code_gen += template % (i, i)
     
-    f = open(filename,'r')
+    f = open(filename,'r', encoding="utf-8")
     filedata = f.read()
     f.close()
     newdata = filedata.replace(sig,code_gen)
-    f = open(filename,'w')
+    f = open(filename,'w', encoding="utf-8")
     f.write(newdata)
     f.close()
 
@@ -279,11 +279,11 @@ def generate_flag_declarations(filename):
     for i in range(len(flag_file_data)):
         code_gen += template % (i, i, i, i)
 
-    f = open(filename,'r')
+    f = open(filename,'r', encoding="utf-8")
     filedata = f.read()
     f.close()
     newdata = filedata.replace(sig,code_gen)
-    f = open(filename,'w')
+    f = open(filename,'w', encoding="utf-8")
     f.write(newdata)
     f.close()
 
@@ -300,11 +300,11 @@ if (strcmp(writeData, "%s") == 0){
         flag_value = flag_file_data["flag_%s" % (str(i))]["flag_value"]
         code_gen += template % (flag_value, i,i,i,i,i,i)
 
-    f = open(filename,'r')
+    f = open(filename,'r', encoding="utf-8")
     filedata = f.read()
     f.close()
     newdata = filedata.replace(sig,code_gen)
-    f = open(filename,'w')
+    f = open(filename,'w', encoding="utf-8")
     f.write(newdata)
     f.close()
 
@@ -315,7 +315,7 @@ if __name__ == "__main__":
     dashboard = "flag_scoreboard" 
 
     # default args
-
+    os.mkdir("main")
     import_flag_file_data(filename)
     copy_gatt_server_files(ble_ctf_dir)
 
