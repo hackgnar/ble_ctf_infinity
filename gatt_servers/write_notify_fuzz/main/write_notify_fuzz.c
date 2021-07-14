@@ -329,7 +329,9 @@ static void gatts_profile_event_handler(esp_gatts_cb_event_t event, esp_gatt_if_
                     esp_restart();
                 }
                 if (param->write.handle == blectf_handle_table[WRITE_NOTIFY_FUZZ_IDX_CHAR_READ_FLAG]+1){
-		    uint64_t descr_value = param->write.value[0]<<40 |param->write.value[1]<<32 |param->write.value[2]<<24 |param->write.value[3] << 16 | param->write.value[4] << 8 |param->write.value[5] ;
+		    // TODO verify the following edit didnt break anything... i was getting compile time buff overflow errors so changed it
+		    //uint64_t descr_value = param->write.value[0]<<40 |param->write.value[1]<<32 |param->write.value[2]<<24 |param->write.value[3] << 16 | param->write.value[4] << 8 |param->write.value[5] ;
+		    uint64_t descr_value = param->write.value[0]<<24 |param->write.value[1] << 16 | param->write.value[2] << 8 |param->write.value[3] ;
                     ESP_LOGI(GATTS_TABLE_TAG, "descr_value = %llu", descr_value);
 		    if (param->write.value[0] == 0xAA && param->write.value[1] == 0xBB && param->write.value[2] == 0xC8 && param->write.value[3] == 0xDD && param->write.value[4] == 0xEE && param->write.value[5] == 0xFF ){
 		    	esp_ble_gatts_send_indicate(gatts_if, param->write.conn_id, blectf_handle_table[WRITE_NOTIFY_FUZZ_IDX_CHAR_READ_FLAG], sizeof(flag_write_notify_fuzz_value), (uint8_t *)flag_write_notify_fuzz_value, true);
