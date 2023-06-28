@@ -1,4 +1,4 @@
-FROM espressif/idf:v4.3.3 as dev
+FROM espressif/idf:v3.3.1 as dev
 RUN mkdir /ble_ctf_infinity
 COPY ./code_gen /ble_ctf_infinity/code_gen
 COPY ./gatt_servers /ble_ctf_infinity/gatt_servers
