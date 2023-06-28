@@ -1,11 +1,11 @@
 gatt_name, flag_value
-flag_scoreboard, 04dc54d9053b4307680a
-read_disconnect, 873c6495e4e738c94e1c
+flag_scoreboard, 04dc54d9054b4307680a
+read_disconnect, 873c6496e4e738c94e1c
 easy_mitm_psk_pair_req, 5d696cdf53a916c0a98d
-mac_whitelist, 0ad3fe0c58e0a47b8afb
-mitm_psk_pair_req, e634f010b4d3ce9a324a
-password_bruteforce, 993f257f734288d91fb3
-no_psk_pair_req,374449788e5de78804c4
-simple_adv,aee4bd941f8b4d9e3921
-write_notify_fuzz, 12345678901234567890
-pcap_write, 12345678901234567890
+mac_whitelist, 0ad3fe0c59e0a47b8afb
+mitm_psk_pair_req, e634f020b4d3ce9a324a
+password_bruteforce, 993f267f734288d91fb3
+no_psk_pair_req,374449788e6de78804c4
+simple_adv,aee4bd941f8b4d9e4921
+write_notify_fuzz, 7772697465206e6f7469
+pcap_write, 70636170207772697465
