@@ -29,25 +29,28 @@ esptool.py --chip esp32 --port /dev/ttyUSB0 \
 
 If you want to compile the code yourself, but are having issues setting up an environment, you can use the docker build method.  This will provide you with a clean uniform build environment each time.  To build from docker do the following:
 
-Build your base docker image and compile the code
+Build your base docker image for development or compiling code
 ```
-docker build -t blectf_infinity:v1 .
-```
-
-Start up a docker instance to pull out the binaries you compiled
-```
-docker run blectf_infinity:v1
+docker build -t blectfi .
 ```
 
-Copy the build from your docker instance
+Start up a docker instance and mount your code repository to /ble_ctf_infinity
 ```
-docker cp <instance_name>:/ble_ctf_infinity/build .
+docker run -it -v ./:/ble_ctf_infinity blei
+```
+
+Build your project.
+```
+cd /ble_ctf_infinity
+make codegen
+make
 ```
 
 Shutdown and kill your docker
 ```
-docker stop <instance_name>
-docker rm <instance_name>
+exit
+docker stop blei
+docker rm blei
 ```
 
 Flash the firmware you built (you will need [esptool](https://github.com/espressif/esptool) installed)
