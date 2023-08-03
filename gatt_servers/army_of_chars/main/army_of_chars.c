@@ -215,7 +215,7 @@ static const uint8_t char_prop_read_write   = ESP_GATT_CHAR_PROP_BIT_WRITE | ESP
 
 // start ctf data vars
 static char writeData[100];
-static const char docs_value[] = "TEMPLATE GATT READ";
+static char docs_value[20] = "cccccccccccccccccccc";
 static const char warp_value[] = "write here to goto to scoreboard";
 
 static char flag_army_of_chars_value[] = "12345678901234567890";
@@ -909,6 +909,24 @@ static void gatts_profile_event_handler(esp_gatts_cb_event_t event, esp_gatt_if_
        	    break;
         case ESP_GATTS_READ_EVT:
             ESP_LOGI(GATTS_TABLE_TAG, "ESP_GATTS_READ_EVT");
+            //create random values
+            const char charset[] = "abcdefghijklmnopqrstuvwxyz1234567890";
+            char tmp[20] = "aaaaaaaaaaaaaaaaaaaa";
+            for (size_t n = 0; n < 20; n++) {
+                int key = rand() % (int) (sizeof charset - 1);
+                tmp[n] = charset[key];
+            }
+            //memset(docs_value, 0, 20);
+            ESP_LOGI(GATTS_TABLE_TAG, "memcopy %s", tmp);
+            memset(docs_value, 0, sizeof tmp);
+            memcpy(docs_value, tmp, sizeof tmp);
+            //docs_value[20] = '\0';
+            if(param->read.handle < 142){
+                esp_ble_gatts_set_attr_value(blectf_handle_table[param->read.handle - 38], 20, (uint8_t *)tmp);
+                ESP_LOGI(GATTS_TABLE_TAG, "rewriting");
+            }
+            ESP_LOGI(GATTS_TABLE_TAG, "write_warp handle = %d", blectf_handle_table[ARMY_OF_CHARS_IDX_CHAR_WRITE_WARP]);
+            ESP_LOGI(GATTS_TABLE_TAG, "flag handle = %d", blectf_handle_table[ARMY_OF_CHARS_IDX_CHAR_READ_FLAG]);
             ESP_LOGI(GATTS_TABLE_TAG, "ESP_GATTS_READ_EVT, handle = %d", param->read.handle);
 
        	    break;
