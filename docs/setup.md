@@ -36,7 +36,7 @@ docker build -t blectfi .
 
 Start up a docker instance and mount your code repository to /ble_ctf_infinity
 ```
-docker run -it -v ./:/ble_ctf_infinity blei
+docker run -it -v ./:/ble_ctf_infinity blectfi
 ```
 
 Build your project.
@@ -49,8 +49,8 @@ make
 Shutdown and kill your docker
 ```
 exit
-docker stop blei
-docker rm blei
+docker stop blectfi
+docker rm blectfi
 ```
 
 Flash the firmware you built (you will need [esptool](https://github.com/espressif/esptool) installed)
