@@ -36,7 +36,7 @@ docker build -t blectfi .
 
 Start up a docker instance and mount your code repository to /ble_ctf_infinity
 ```
-docker run -it -v ./:/ble_ctf_infinity blectfi
+docker run -it -v ./:/ble_ctf_infinity --name blectfi blectfi
 ```
 
 Build your project.
